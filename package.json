@@ -1,0 +1,48 @@
+{
+  "name": "react-screen-keyboard",
+  "version": "1.0.0",
+  "description": "React sreen keyboard",
+  "main": "Keyboard.js",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WiaczeslawP/react-screen-keyboard"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "component",
+    "touchscreen",
+    "keyboard"
+  ],
+  "author": "Wiaczeslaw Puchkov <wiaczeslaw.ss@gmail.com> (https://github.com/WiaczeslawP)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WiaczeslawP/react-screen-keyboard/issues"
+  },
+  "homepage": "https://github.com/WiaczeslawP/react-screen-keyboard",
+  "devDependencies": {
+    "babel-core": "^6.0.20",
+    "babel-eslint": "^4.1.3",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
+    "eslint": "^1.10.3",
+    "eslint-plugin-react": "^3.6.2",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1",
+    "react-dom": "~15.3.0",
+    "react": "~15.3.0",
+    "material-ui": "~0.15.3"
+  },
+  "dependencies": {
+    "css-modules-require-hook": "~4.0.1",
+    "style-loader": "~0.13.1",
+    "css-loader": "~0.23.1"
+  }
+}
