@@ -9,7 +9,7 @@ import BackspaceIcon from './BackspaceIcon';
 import LanguageIcon from './LanguageIcon';
 import ShiftIcon from './ShiftIcon';
 
-import styles from './Keyboard.css';
+// import styles from './Keyboard.css';
 
 export default class Keyboard extends Component {
 	static propTypes = {
@@ -114,19 +114,19 @@ export default class Keyboard extends Component {
 		const hasRightBottomButton = handleRightBottomClick && rightBottomValue;
 		
 		return (
-			<div className={styles.keyboard}>
-				<div className={styles.row}>
+			<div className="keyboard">
+				<div className="row">
 					{_.map(numbers, (button) => 
 						<KeyboardButton 
 							value={button} 
 							onClick={this.handleLetterButtonClick}
-							classes={styles.numberButton}
+							classes={"numberButton"}
 							index={button}
 						/>
 					)}
 					<KeyboardButton
 						value={<BackspaceIcon />}
-						classes={styles.button}
+						classes={"styles.button"}
 						onClick={this.handleBackspaceClick}
 					/>
 				</div>
@@ -156,7 +156,7 @@ export default class Keyboard extends Component {
 				<div className={styles.row}>
 					<KeyboardButton
 						value={<ShiftIcon />}
-						classes={styles.button}
+						classes={"styles.button"}
 						onClick={this.handleShiftClick}
 					/>
 					{_.map(keys[2], (button) => 
@@ -168,7 +168,7 @@ export default class Keyboard extends Component {
 					)}
 					<KeyboardButton
 						value={symbolsKeyValue}
-						classes={styles.button}
+						classes={"styles.button"}
 						onClick={this.handleSymbolsClick}
 					/>
 				</div>
@@ -177,24 +177,24 @@ export default class Keyboard extends Component {
 					{hasLeftBottomButton ?
 						<KeyboardButton
 							value={leftBottomValue}
-							classes={styles.leftBottomButton}
+							classes={"styles.leftBottomButton"}
 							onClick={this.handleLeftBottomClick}
 						/>
 					: null}
 					<KeyboardButton
 						value={<LanguageIcon />}
-						classes={styles.button}
+						classes={"styles.button"}
 						onClick={this.handleLanguageClick}
 					/>
 					<KeyboardButton
 						value={' '}
-						classes={styles.space}
+						classes={"styles.space"}
 						onClick={this.handleLetterButtonClick}
 					/>
 					{hasRightBottomButton ?
 						<KeyboardButton
 							value={rightBottomValue}
-							classes={styles.rightBottomButton}
+							classes={"styles.rightBottomButton"}
 							onClick={this.handleRightBottomClick}
 						/>
 					: null}

@@ -2,19 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './src/index'
-  ],
+  entry: "src/Keyboard.js",
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    filename: 'Keyboard.js',
+    library: "DayPicker",
+    libraryTarget: "var"
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       '_': 'underscore',
     })
@@ -26,20 +21,9 @@ module.exports = {
         loaders: ['react-hot', 'babel'],
         include: path.join(__dirname, 'src')
       },
-      {
-        test: /\.global\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap'
-        ]
-      },
-      {
-        test: /^((?!\.global).)*\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?modules' +
-          '&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
-        ]
-      }],
+    ]
+  }
+  externals: {
+    "react": "React"
   }
 };

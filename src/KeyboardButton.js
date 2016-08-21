@@ -19,7 +19,7 @@ export default class KeyboardButton extends Component {
 
 	render() {
 		return (
-			<button className={styles.button + ' ' + this.props.classes} onClick={this.handleClick}>
+			<button className={"styles.button" + ' ' + this.props.classes} onClick={this.handleClick}>
 				{this.props.value}
 			</button>
 		);
