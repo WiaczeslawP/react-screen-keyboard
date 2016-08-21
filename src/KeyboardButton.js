@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import styles from './Keyboard.css';
+// import styles from './Keyboard.css';
 
 export default class KeyboardButton extends Component {
 	static propTypes = {
