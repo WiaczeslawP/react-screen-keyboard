@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'Keyboard.js',
-    library: "DayPicker",
+    library: "Keyboard",
     libraryTarget: "var"
   },
   plugins: [
