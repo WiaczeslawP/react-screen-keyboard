@@ -1,8 +1,8 @@
 {
   "name": "react-screen-keyboard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React sreen keyboard",
-  "main": "Keyboard.js",
+  "main": "src/Keyboard.js",
   "scripts": {
     "start": "node server.js",
     "lint": "eslint src"
