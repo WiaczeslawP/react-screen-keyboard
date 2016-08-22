@@ -89,8 +89,8 @@ export default class Keyboard extends Component {
 		}
 
 		return this.state.uppercase ?
-			_.map(keysSet, keyRow => _.map(keyRow, key => key.toUpperCase()))
-			: keysSet;	
+			keysSet.map(keyRow => keyRow.map(key => key.toUpperCase()))
+			: keysSet;
 	}
 
 	getSymbolsKeyValue () {
@@ -112,13 +112,13 @@ export default class Keyboard extends Component {
 		const symbolsKeyValue = this.getSymbolsKeyValue();
 		const hasLeftBottomButton = handleLeftBottomClick && leftBottomValue;
 		const hasRightBottomButton = handleRightBottomClick && rightBottomValue;
-		
+
 		return (
 			<div className="keyboard">
 				<div className="row">
-					{_.map(numbers, (button) => 
-						<KeyboardButton 
-							value={button} 
+					{numbers.map((button) =>
+						<KeyboardButton
+							value={button}
 							onClick={this.handleLetterButtonClick}
 							classes={"numberButton"}
 							index={button}
@@ -132,9 +132,9 @@ export default class Keyboard extends Component {
 				</div>
 
 				<div className={styles.row}>
-					{_.map(keys[0], (button) => 
-						<KeyboardButton 
-							value={button} 
+					{keys[0].map((button) =>
+						<KeyboardButton
+							value={button}
 							onClick={this.handleLetterButtonClick}
 							index={button}
 						/>
@@ -143,9 +143,9 @@ export default class Keyboard extends Component {
 
 				<div className={styles.row}>
 					<div className={styles.halfButton}></div>
-					{_.map(keys[1], (button) => 
-						<KeyboardButton 
-								value={button} 
+					{keys[1].map((button) =>
+						<KeyboardButton
+								value={button}
 								onClick={this.handleLetterButtonClick}
 								index={button}
 							/>
@@ -159,9 +159,9 @@ export default class Keyboard extends Component {
 						classes={"styles.button"}
 						onClick={this.handleShiftClick}
 					/>
-					{_.map(keys[2], (button) => 
-						<KeyboardButton 
-							value={button} 
+					{keys[2].map((button) =>
+						<KeyboardButton
+							value={button}
 							onClick={this.handleLetterButtonClick}
 							index={button}
 						/>

@@ -10,11 +10,6 @@ module.exports = {
     library: "Keyboard",
     libraryTarget: "var"
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      '_': 'underscore',
-    })
-  ],
   module: {
     loaders: [
       {

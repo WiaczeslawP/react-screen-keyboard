@@ -1,6 +1,6 @@
 {
   "name": "react-screen-keyboard",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React sreen keyboard",
   "main": "Keyboard.js",
   "scripts": {
@@ -56,7 +56,6 @@
     "rimraf": "2.5.4",
     "sinon": "1.17.5",
     "sinon-chai": "2.8.0",
-    "underscore": "^1.8.3",
     "webpack": "1.13.1"
   },
   "dependencies": {
