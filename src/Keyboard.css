@@ -3,13 +3,13 @@
 	margin: auto;
 }
 
-.row {
+.keyboard-row {
 	display: flex;
 }
 
-.keysSet {
+.keyboard-keysSet {
 	display: flex;
-	    flex-grow: 1;
+	flex-grow: 1;
 }
 
 .button {
@@ -23,29 +23,28 @@
 	border-radius: 4px;
 }
 
-.numberButton {
-	composes: button;
+.keyboard-numberButton {
 	flex-grow: 1;
 }
 
-.halfButton {
+.keyboard-halfButton {
 	flex-basis: 32px;
 }
 
-.space {
+.keyboard-space {
 	flex-grow: 1;
 }
 
-.utilButton {
+.keyboard-utilButton {
 	flex-grow: 2;
 	max-width: 55px;
 }
 
-.leftBottomButton {
+.keyboard-leftBottomButton {
 	flex-basis: 128px;
 }
 
-.rightBottomButton {
+.keyboard-rightBottomButton {
 	flex-basis: 128px;
 	background-color: #63b324;
 	border-color: #63b324;
