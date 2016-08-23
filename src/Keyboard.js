@@ -11,10 +11,10 @@ import ShiftIcon from './ShiftIcon';
 
 export default class Keyboard extends Component {
 	static propTypes = {
-		leftBottomValue: PropTypes.oneOfType([PropTypes.string.isRequired,, PropTypes.node.isRequired]),
-		rightBottomValue: PropTypes.oneOfType([PropTypes.string.isRequired,, PropTypes.node.isRequired]),
-		handleLeftBottomClick: PropTypes.func.isRequired,
-		handleRightBottomClick: PropTypes.func.isRequired,
+		leftBottomValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+		rightBottomValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+		handleLeftBottomClick: PropTypes.func,
+		handleRightBottomClick: PropTypes.func,
 		inputNode: PropTypes.any.isRequired,
 		onClick: PropTypes.func.isRequired,
 	};
@@ -119,7 +119,7 @@ export default class Keyboard extends Component {
 							value={button}
 							onClick={this.handleLetterButtonClick}
 							classes={"keyboard-numberButton"}
-							index={button}
+							key={button}
 						/>
 					)}
 					<KeyboardButton
@@ -133,7 +133,7 @@ export default class Keyboard extends Component {
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
-							index={button}
+							key={button}
 						/>
 					)}
 				</div>
@@ -144,7 +144,7 @@ export default class Keyboard extends Component {
 						<KeyboardButton
 								value={button}
 								onClick={this.handleLetterButtonClick}
-								index={button}
+								key={button}
 							/>
 					)}
 					<div className="keyboard-halfButton"></div>
@@ -159,7 +159,7 @@ export default class Keyboard extends Component {
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
-							index={button}
+							key={button}
 						/>
 					)}
 					<KeyboardButton
