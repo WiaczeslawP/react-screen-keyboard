@@ -11,12 +11,15 @@ import ShiftIcon from './ShiftIcon';
 
 export default class Keyboard extends Component {
 	static propTypes = {
-		leftBottomValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-		rightBottomValue: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-		handleLeftBottomClick: PropTypes.func,
-		handleRightBottomClick: PropTypes.func,
+		leftButtons: PropTypes.arrayOf(PropTypes.node),
+		rightButtons: PropTypes.arrayOf(PropTypes.node),
 		inputNode: PropTypes.any.isRequired,
 		onClick: PropTypes.func.isRequired,
+	};
+
+	static defaultProps = {
+		leftButtons: [],
+		rightButtons: [],
 	};
 
 	constructor(props) {
@@ -104,12 +107,10 @@ export default class Keyboard extends Component {
 	}
 
 	render() {
-		const {handleLeftBottomClick, handleRightBottomClick, leftBottomValue, rightBottomValue} = this.props;
+		const {leftButtons, rightButtons} = this.props;
 		const keys = this.getKeys();
 		const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 		const symbolsKeyValue = this.getSymbolsKeyValue();
-		const hasLeftBottomButton = handleLeftBottomClick && leftBottomValue;
-		const hasRightBottomButton = handleRightBottomClick && rightBottomValue;
 
 		return (
 			<div className="keyboard">
@@ -169,11 +170,12 @@ export default class Keyboard extends Component {
 				</div>
 
 				<div className="keyboard-row">
+					{leftButtons}
 					{hasLeftBottomButton ?
 						<KeyboardButton
 							value={leftBottomValue}
 							classes="keyboard-leftBottomButton"
-							onClick={this.handleLeftBottomClick}
+							onClick={handleLeftBottomClick}
 						/>
 					: null}
 					<KeyboardButton
@@ -185,13 +187,7 @@ export default class Keyboard extends Component {
 						classes="keyboard-space"
 						onClick={this.handleLetterButtonClick}
 					/>
-					{hasRightBottomButton ?
-						<KeyboardButton
-							value={rightBottomValue}
-							classes="keyboard-rightBottomButton"
-							onClick={this.handleRightBottomClick}
-						/>
-					: null}
+					{rightButtons}
 				</div>
 			</div>
 		);
