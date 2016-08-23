@@ -128,7 +128,7 @@ export default class Keyboard extends Component {
 					/>
 				</div>
 
-				<div className={styles.row}>
+				<div className="keyboard-row">
 					{keys[0].map((button) =>
 						<KeyboardButton
 							value={button}
@@ -138,8 +138,8 @@ export default class Keyboard extends Component {
 					)}
 				</div>
 
-				<div className={styles.row}>
-					<div className={styles.halfButton}></div>
+				<div className="keyboard-row">
+					<div className="keyboard-halfButton"></div>
 					{keys[1].map((button) =>
 						<KeyboardButton
 								value={button}
@@ -150,7 +150,7 @@ export default class Keyboard extends Component {
 					<div className="keyboard-halfButton"></div>
 				</div>
 
-				<div className={styles.row}>
+				<div className="keyboard-row">
 					<KeyboardButton
 						value={<ShiftIcon />}
 						onClick={this.handleShiftClick}
@@ -168,7 +168,7 @@ export default class Keyboard extends Component {
 					/>
 				</div>
 
-				<div className={styles.row}>
+				<div className="keyboard-row">
 					{hasLeftBottomButton ?
 						<KeyboardButton
 							value={leftBottomValue}
