@@ -171,13 +171,6 @@ export default class Keyboard extends Component {
 
 				<div className="keyboard-row">
 					{leftButtons}
-					{hasLeftBottomButton ?
-						<KeyboardButton
-							value={leftBottomValue}
-							classes="keyboard-leftBottomButton"
-							onClick={handleLeftBottomClick}
-						/>
-					: null}
 					<KeyboardButton
 						value={<LanguageIcon />}
 						onClick={this.handleLanguageClick}

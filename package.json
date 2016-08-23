@@ -1,6 +1,6 @@
 {
   "name": "react-screen-keyboard",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "React sreen keyboard",
   "main": "Keyboard.js",
   "scripts": {
