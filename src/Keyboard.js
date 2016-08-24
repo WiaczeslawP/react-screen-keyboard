@@ -58,7 +58,7 @@ export default class Keyboard extends Component {
 			this.props.inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
 		}, 0);
 		this.setState({uppercase: false});
-		this.refs.input.dispatchEvent(new Event('change'));
+		this.props.inputNode.dispatchEvent(new Event('change'));
 	}
 
 	handleBackspaceClick() {
@@ -82,7 +82,7 @@ export default class Keyboard extends Component {
 			this.props.inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
 		}, 0);
 		this.setState({uppercase: !nextValue.length});
-		this.refs.input.dispatchEvent(new Event('change'));
+		this.props.inputNode.dispatchEvent(new Event('change'));
 	}
 
 	getKeys() {
