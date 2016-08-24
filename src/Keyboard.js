@@ -14,7 +14,7 @@ export default class Keyboard extends Component {
 		leftButtons: PropTypes.arrayOf(PropTypes.node),
 		rightButtons: PropTypes.arrayOf(PropTypes.node),
 		inputNode: PropTypes.any.isRequired,
-		onClick: PropTypes.func.isRequired,
+		onClick: PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -50,12 +50,15 @@ export default class Keyboard extends Component {
 		const {value, selectionStart, selectionEnd} = this.props.inputNode;
 		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
 
-		this.props.onClick(nextValue);
+		if (this.props.onClick) {
+			this.props.onClick(nextValue);
+		}
 		setTimeout(() => {
 			this.props.inputNode.focus();
 			this.props.inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
 		}, 0);
 		this.setState({uppercase: false});
+		this.refs.input.dispatchEvent(new Event('change'));
 	}
 
 	handleBackspaceClick() {
@@ -71,12 +74,15 @@ export default class Keyboard extends Component {
 		}
 		nextSelectionPosition = (nextSelectionPosition > 0) ? nextSelectionPosition : 0;
 
-		this.props.onClick(nextValue);
+		if (this.props.onClick) {
+			this.props.onClick(nextValue);
+		}
 		setTimeout(() => {
 			this.props.inputNode.focus();
 			this.props.inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
 		}, 0);
 		this.setState({uppercase: !nextValue.length});
+		this.refs.input.dispatchEvent(new Event('change'));
 	}
 
 	getKeys() {
