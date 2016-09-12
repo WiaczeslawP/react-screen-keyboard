@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 export default class KeyboardButton extends Component {
 	static propTypes = {
-		value: PropTypes.oneOfType([PropTypes.string.isRequired,, PropTypes.node.isRequired]),
+		value: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.node.isRequired]),
 		classes: PropTypes.string,
 		onClick: PropTypes.func.isRequired,
 	};
@@ -18,11 +18,9 @@ export default class KeyboardButton extends Component {
 
 	render() {
 		return (
-			<button className={"keyboard-button" + ' ' + this.props.classes} onClick={this.handleClick}>
+			<button className={'keyboard-button' + ' ' + this.props.classes} onClick={this.handleClick}>
 				{this.props.value}
 			</button>
 		);
 	}
 }
-
-export default KeyboardButton;

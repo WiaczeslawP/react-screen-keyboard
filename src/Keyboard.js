@@ -1,13 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import KeyboardButton from './KeyboardButton';
 
-import KeyboardLatinConstants from './KeyboardLatinConstants';
-import KeyboardCyrillicConstants from './KeyboardCyrillicConstants';
-import KeyboardSymbolsConstants from './KeyboardSymbolsConstants';
+import LatinLayout from './layouts/LatinLayout';
+import CyrillicLayout from './layouts/CyrillicLayout';
+import SymbolsLayout from './layouts/SymbolsLayout';
 
-import BackspaceIcon from './BackspaceIcon';
-import LanguageIcon from './LanguageIcon';
-import ShiftIcon from './ShiftIcon';
+import BackspaceIcon from './icons/BackspaceIcon';
+import LanguageIcon from './icons/LanguageIcon';
+import ShiftIcon from './icons/ShiftIcon';
 
 export default class Keyboard extends Component {
 	static propTypes = {
@@ -24,7 +24,6 @@ export default class Keyboard extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {currentLanguage: 'latin', showSymbols: false, uppercase: true};
 		this.handleLetterButtonClick = this.handleLetterButtonClick.bind(this);
 		this.handleBackspaceClick = this.handleBackspaceClick.bind(this);
 		this.handleLanguageClick = this.handleLanguageClick.bind(this);
@@ -32,6 +31,11 @@ export default class Keyboard extends Component {
 		this.handleSymbolsClick = this.handleSymbolsClick.bind(this);
 		this.getSymbolsKeyValue = this.getSymbolsKeyValue.bind(this);
 		this.getKeys = this.getKeys.bind(this);
+		this.state = {
+			currentLanguage: 'latin',
+			showSymbols: false,
+			uppercase: this.checkUppercase(),
+		};
 	}
 
 	handleLanguageClick() {
@@ -47,22 +51,32 @@ export default class Keyboard extends Component {
 	}
 
 	handleLetterButtonClick(key) {
-		const {value, selectionStart, selectionEnd} = this.props.inputNode;
+		const {inputNode} = this.props;
+		const {value, selectionStart, selectionEnd} = inputNode;
 		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
 
+		inputNode.value = nextValue;
 		if (this.props.onClick) {
 			this.props.onClick(nextValue);
 		}
 		setTimeout(() => {
-			this.props.inputNode.focus();
-			this.props.inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
+			inputNode.focus();
+			inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
 		}, 0);
-		this.setState({uppercase: false});
-		this.props.inputNode.dispatchEvent(new Event('change'));
+		this.setState({uppercase: this.checkUppercase()});
+		inputNode.dispatchEvent(new Event('change'));
+	}
+
+	checkUppercase() {
+		const {inputNode} = this.props;
+		return inputNode.type !== 'password' &&
+			inputNode.dataset.type !== 'email' &&
+			!inputNode.value.length
 	}
 
 	handleBackspaceClick() {
-		const {value, selectionStart, selectionEnd} = this.props.inputNode;
+		const {inputNode} = this.props;
+		const {value, selectionStart, selectionEnd} = inputNode;
 		let nextValue;
 		let nextSelectionPosition;
 		if (selectionStart === selectionEnd) {
@@ -74,25 +88,26 @@ export default class Keyboard extends Component {
 		}
 		nextSelectionPosition = (nextSelectionPosition > 0) ? nextSelectionPosition : 0;
 
+		inputNode.value = nextValue;
 		if (this.props.onClick) {
 			this.props.onClick(nextValue);
 		}
 		setTimeout(() => {
-			this.props.inputNode.focus();
-			this.props.inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
+			inputNode.focus();
+			inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
 		}, 0);
-		this.setState({uppercase: !nextValue.length});
-		this.props.inputNode.dispatchEvent(new Event('change'));
+		this.setState({uppercase: this.checkUppercase()});
+		inputNode.dispatchEvent(new Event('change'));
 	}
 
 	getKeys() {
 		let keysSet;
 		if (this.state.showSymbols) {
-			keysSet = KeyboardSymbolsConstants;
+			keysSet = SymbolsLayout;
 		} else if (this.state.currentLanguage === 'latin') {
-			keysSet = KeyboardLatinConstants;
+			keysSet = LatinLayout;
 		} else {
-			keysSet = KeyboardCyrillicConstants;
+			keysSet = CyrillicLayout;
 		}
 
 		return this.state.uppercase ?
@@ -113,7 +128,7 @@ export default class Keyboard extends Component {
 	}
 
 	render() {
-		const {leftButtons, rightButtons} = this.props;
+		const {leftButtons, rightButtons, inputNode} = this.props;
 		const keys = this.getKeys();
 		const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 		const symbolsKeyValue = this.getSymbolsKeyValue();
@@ -181,16 +196,26 @@ export default class Keyboard extends Component {
 						value={<LanguageIcon />}
 						onClick={this.handleLanguageClick}
 					/>
+					{inputNode.dataset.type === 'email' ?
+						<KeyboardButton
+							value={'@'}
+							onClick={this.handleLetterButtonClick}
+						/>
+					: null}
 					<KeyboardButton
 						value={' '}
 						classes="keyboard-space"
 						onClick={this.handleLetterButtonClick}
 					/>
+					{inputNode.dataset.type === 'email' ?
+						<KeyboardButton
+							value={'.'}
+							onClick={this.handleLetterButtonClick}
+						/>
+					: null}
 					{rightButtons}
 				</div>
 			</div>
 		);
 	}
 }
-
-export default Keyboard;
