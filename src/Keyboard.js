@@ -16,12 +16,14 @@ export default class Keyboard extends Component {
 		inputNode: PropTypes.any.isRequired,
 		onClick: PropTypes.func,
 		isFirstLetterUppercase: PropTypes.bool,
+		defaultLanguage: PropTypes.string,
 	};
 
 	static defaultProps = {
 		leftButtons: [],
 		rightButtons: [],
 		isFirstLetterUppercase: false,
+		defaultLanguage: 'cyrrilic',
 	};
 
 	constructor(props) {
@@ -33,7 +35,7 @@ export default class Keyboard extends Component {
 		this.handleSymbolsClick = this.handleSymbolsClick.bind(this);
 
 		this.state = {
-			currentLanguage: 'latin',
+			currentLanguage: props.defaultLanguage,
 			showSymbols: false,
 			uppercase: this.isUppercase(),
 		};
@@ -116,7 +118,7 @@ export default class Keyboard extends Component {
 			: keysSet;
 	}
 
-	getSymbolsKeyValue () {
+	getSymbolsKeyValue() {
 		let symbolsKeyValue;
 		if (!this.state.showSymbols) {
 			symbolsKeyValue = '.?!&';
@@ -165,10 +167,10 @@ export default class Keyboard extends Component {
 					<div className="keyboard-halfButton"></div>
 					{keys[1].map((button) =>
 						<KeyboardButton
-								value={button}
-								onClick={this.handleLetterButtonClick}
-								key={button}
-							/>
+							value={button}
+							onClick={this.handleLetterButtonClick}
+							key={button}
+						/>
 					)}
 					<div className="keyboard-halfButton"></div>
 				</div>
