@@ -15,11 +15,13 @@ export default class Keyboard extends Component {
 		rightButtons: PropTypes.arrayOf(PropTypes.node),
 		inputNode: PropTypes.any.isRequired,
 		onClick: PropTypes.func,
+		isFirstLetterUppercase: PropTypes.bool,
 	};
 
 	static defaultProps = {
 		leftButtons: [],
 		rightButtons: [],
+		isFirstLetterUppercase: false,
 	};
 
 	constructor(props) {
@@ -29,12 +31,11 @@ export default class Keyboard extends Component {
 		this.handleLanguageClick = this.handleLanguageClick.bind(this);
 		this.handleShiftClick = this.handleShiftClick.bind(this);
 		this.handleSymbolsClick = this.handleSymbolsClick.bind(this);
-		this.getSymbolsKeyValue = this.getSymbolsKeyValue.bind(this);
-		this.getKeys = this.getKeys.bind(this);
+
 		this.state = {
 			currentLanguage: 'latin',
 			showSymbols: false,
-			uppercase: this.checkUppercase(),
+			uppercase: this.isUppercase(),
 		};
 	}
 
@@ -63,15 +64,15 @@ export default class Keyboard extends Component {
 			inputNode.focus();
 			inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
 		}, 0);
-		this.setState({uppercase: this.checkUppercase()});
+		this.setState({uppercase: this.isUppercase()});
 		inputNode.dispatchEvent(new Event('change'));
 	}
 
-	checkUppercase() {
-		const {inputNode} = this.props;
+	isUppercase() {
+		const {inputNode, isFirstLetterUppercase} = this.props;
 		return inputNode.type !== 'password' &&
 			inputNode.dataset.type !== 'email' &&
-			!inputNode.value.length
+			!inputNode.value.length && isFirstLetterUppercase;
 	}
 
 	handleBackspaceClick() {
@@ -96,7 +97,7 @@ export default class Keyboard extends Component {
 			inputNode.focus();
 			inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
 		}, 0);
-		this.setState({uppercase: this.checkUppercase()});
+		this.setState({uppercase: this.isUppercase()});
 		inputNode.dispatchEvent(new Event('change'));
 	}
 
