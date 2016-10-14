@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PureComponent, PropTypes} from 'react';
 
-export default class KeyboardButton extends Component {
+export default class KeyboardButton extends PureComponent {
 	static propTypes = {
 		value: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.node.isRequired]),
 		classes: PropTypes.string,

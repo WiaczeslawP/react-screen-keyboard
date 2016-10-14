@@ -1,6 +1,9 @@
 .keyboard {
-	max-width: 900px;
-	margin: auto;
+	width: 100%;
+	max-width: 1030px;
+	margin: 0 auto;
+	background: #dadada;
+	box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.5);
 }
 
 .keyboard-row {
@@ -12,15 +15,27 @@
 	flex-grow: 1;
 }
 
-.button {
+.keyboard-button {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	flex-basis: 82px;
+	flex-basis: 100px;
 	font-size: 18px;
-	height: 64px;
+	height: 60px;
 	margin: 5px;
 	border-radius: 4px;
+	background-color: #F5F5F5;
+	border: 1px solid #CECECE;
+	font-family: 'Roboto';
+	font-weight: 300;
+}
+
+.keyboard-button:focus {
+	outline: none;
+}
+
+.keyboard-button:active {
+	background-color: #cccccc;
 }
 
 .keyboard-numberButton {
@@ -28,7 +43,7 @@
 }
 
 .keyboard-halfButton {
-	flex-basis: 32px;
+	flex-basis: 56px;
 }
 
 .keyboard-space {
@@ -40,12 +55,12 @@
 	max-width: 55px;
 }
 
-.keyboard-leftBottomButton {
+.keyboard-additionalButton {
 	flex-basis: 128px;
 }
 
-.keyboard-rightBottomButton {
-	flex-basis: 128px;
+.keyboard-submit-button {
+	flex-basis: 144px;
 	background-color: #63b324;
 	border-color: #63b324;
 	color: #ffffff;

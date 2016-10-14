@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PureComponent, PropTypes} from 'react';
 import KeyboardButton from './KeyboardButton';
 
 import LatinLayout from './layouts/LatinLayout';
@@ -9,7 +9,7 @@ import BackspaceIcon from './icons/BackspaceIcon';
 import LanguageIcon from './icons/LanguageIcon';
 import ShiftIcon from './icons/ShiftIcon';
 
-export default class Keyboard extends Component {
+export default class Keyboard extends PureComponent {
 	static propTypes = {
 		leftButtons: PropTypes.arrayOf(PropTypes.node),
 		rightButtons: PropTypes.arrayOf(PropTypes.node),
