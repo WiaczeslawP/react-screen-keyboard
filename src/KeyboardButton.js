@@ -6,10 +6,12 @@ export default class KeyboardButton extends PureComponent {
 		classes: PropTypes.string,
 		onClick: PropTypes.func.isRequired,
 		autofocus: PropTypes.bool,
+		isDisabled: PropTypes.bool,
 	};
 
 	static defaultProps = {
 		autofocus: false,
+		isDisabled: false,
 	};
 
 	constructor(props) {
@@ -25,8 +27,9 @@ export default class KeyboardButton extends PureComponent {
 		return (
 			<button
 				className={'keyboard-button' + ' ' + this.props.classes}
-				onClick={this.handleClick}
+				onClick={this.props.isDisabled ? null : this.handleClick}
 				autoFocus={this.props.autofocus}
+				disabled={this.props.isDisabled}
 			>
 				{this.props.value}
 			</button>

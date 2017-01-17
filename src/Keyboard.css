@@ -34,6 +34,11 @@
 	outline: none;
 }
 
+.keyboard-button:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
 .keyboard-button:active {
 	background-color: #cccccc;
 }
