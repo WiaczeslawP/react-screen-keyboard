@@ -26,6 +26,7 @@ export default class KeyboardButton extends PureComponent {
 	render() {
 		return (
 			<button
+				type="button"
 				className={'keyboard-button' + ' ' + this.props.classes}
 				onClick={this.props.isDisabled ? null : this.handleClick}
 				autoFocus={this.props.autofocus}
