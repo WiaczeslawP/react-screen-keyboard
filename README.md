@@ -37,6 +37,29 @@ const MyComponent = ({inputNode, goBack, submit}) =>
 export default MyComponent;
 ```
 
+### Custom layout
+
+```js
+import React from 'react';
+import Keyboard, {KeyboardButton} from 'react-screen-keyboard';
+
+const MyComponent = ({inputNode, goBack, submit}) =>
+  <Keyboard
+    inputNode={inputNode}
+    languages = {[{
+      name:"phonetic",
+      symbolsKeyValue: "Абв",
+      layout:[
+        ['я', 'в', 'е', 'р', 'т', 'ъ', 'у', 'и', 'о', 'п', 'ш', 'щ'],
+        ['а', 'с', 'д', 'ф', 'г', 'х', 'й', 'к', 'л'],
+        ['ч', 'з', 'ь', 'ц', 'ж', 'б', 'н', 'м']
+      ]
+    }]}
+  />
+
+export default MyComponent;
+```
+
 `inputNode` prop is required to manipulate input field. It must be a value from ref attribute of the Input component, and it can be passed to the Keyboard component using Redux, for example.
 
 **Example of input component**
