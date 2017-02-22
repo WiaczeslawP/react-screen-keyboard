@@ -5,8 +5,7 @@
   "main": "Keyboard.js",
   "scripts": {
     "dist": "webpack -p",
-    "build": "babel ./src -d ./lib --source-maps",
-    "watch": "webpack --watch"
+    "build": "babel ./src -d ./lib --source-maps"
   },
   "repository": {
     "type": "git",
