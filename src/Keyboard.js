@@ -1,8 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react';
 import KeyboardButton from './KeyboardButton';
 
-import LatinLayout from './layouts/LatinLayout';
-import CyrillicLayout from './layouts/CyrillicLayout';
+import {LatinLayout, CyrillicLayout} from './layouts';
 import SymbolsLayout from './layouts/SymbolsLayout';
 
 import BackspaceIcon from './icons/BackspaceIcon';
@@ -35,14 +34,19 @@ export default class Keyboard extends PureComponent {
 		this.handleSymbolsClick = this.handleSymbolsClick.bind(this);
 
 		this.state = {
-			currentLanguage: props.defaultLanguage,
+			currentLanguage: 0,
+			languages: props.languages ==null ? [LatinLayout,CyrillicLayout] : this.props.languages,
 			showSymbols: false,
 			uppercase: this.isUppercase(),
 		};
 	}
 
 	handleLanguageClick() {
-		this.setState({currentLanguage: this.state.currentLanguage === 'latin' ? 'cyrrilic' : 'latin'});
+		this.setState(
+			{
+				currentLanguage: (this.state.currentLanguage + 1)%this.state.languages.length
+			}
+		);
 	}
 
 	handleShiftClick() {
@@ -106,11 +110,9 @@ export default class Keyboard extends PureComponent {
 	getKeys() {
 		let keysSet;
 		if (this.state.showSymbols) {
-			keysSet = SymbolsLayout;
-		} else if (this.state.currentLanguage === 'latin') {
-			keysSet = LatinLayout;
+			keysSet = SymbolsLayout.layout;
 		} else {
-			keysSet = CyrillicLayout;
+			keysSet = this.state.languages[this.state.currentLanguage].layout;
 		}
 
 		return this.state.uppercase ?
@@ -119,15 +121,11 @@ export default class Keyboard extends PureComponent {
 	}
 
 	getSymbolsKeyValue() {
-		let symbolsKeyValue;
-		if (!this.state.showSymbols) {
-			symbolsKeyValue = '.?!&';
-		} else if (this.state.currentLanguage === 'latin') {
-			symbolsKeyValue = 'Abc';
+		if (this.state.showSymbols) {
+			return this.state.languages[this.state.currentLanguage].symbolsKeyValue;
 		} else {
-			symbolsKeyValue = 'Абв';
+			return SymbolsLayout.symbolsKeyValue;
 		}
-		return symbolsKeyValue;
 	}
 
 	render() {
@@ -195,10 +193,12 @@ export default class Keyboard extends PureComponent {
 
 				<div className="keyboard-row">
 					{leftButtons}
-					<KeyboardButton
-						value={<LanguageIcon />}
-						onClick={this.handleLanguageClick}
-					/>
+					{this.state.languages.length > 1 ?
+						<KeyboardButton
+							value={<LanguageIcon />}
+							onClick={this.handleLanguageClick}
+						/>
+					:null}
 					{inputNode.dataset.type === 'email' ?
 						<KeyboardButton
 							value={'@'}
