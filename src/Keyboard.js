@@ -22,7 +22,7 @@ export default class Keyboard extends PureComponent {
 		leftButtons: [],
 		rightButtons: [],
 		isFirstLetterUppercase: false,
-		defaultLanguage: 'cyrrilic',
+		languages: [LatinLayout, CyrillicLayout],
 	};
 
 	constructor(props) {
@@ -35,7 +35,7 @@ export default class Keyboard extends PureComponent {
 
 		this.state = {
 			currentLanguage: 0,
-			languages: props.languages ==null ? [LatinLayout,CyrillicLayout] : this.props.languages,
+
 			showSymbols: false,
 			uppercase: this.isUppercase(),
 		};
@@ -44,7 +44,7 @@ export default class Keyboard extends PureComponent {
 	handleLanguageClick() {
 		this.setState(
 			{
-				currentLanguage: (this.state.currentLanguage + 1)%this.state.languages.length
+				currentLanguage: (this.state.currentLanguage + 1) % this.props.languages.length
 			}
 		);
 	}
@@ -112,7 +112,7 @@ export default class Keyboard extends PureComponent {
 		if (this.state.showSymbols) {
 			keysSet = SymbolsLayout.layout;
 		} else {
-			keysSet = this.state.languages[this.state.currentLanguage].layout;
+			keysSet = this.props.languages[this.state.currentLanguage].layout;
 		}
 
 		return this.state.uppercase ?
@@ -122,10 +122,9 @@ export default class Keyboard extends PureComponent {
 
 	getSymbolsKeyValue() {
 		if (this.state.showSymbols) {
-			return this.state.languages[this.state.currentLanguage].symbolsKeyValue;
-		} else {
-			return SymbolsLayout.symbolsKeyValue;
+			return this.props.languages[this.state.currentLanguage].symbolsKeyValue;
 		}
+		return SymbolsLayout.symbolsKeyValue;
 	}
 
 	render() {
@@ -137,11 +136,11 @@ export default class Keyboard extends PureComponent {
 		return (
 			<div className="keyboard">
 				<div className="keyboard-row">
-					{numbers.map((button) =>
+					{numbers.map(button =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
-							classes={"keyboard-numberButton"}
+							classes={'keyboard-numberButton'}
 							key={button}
 						/>
 					)}
@@ -152,7 +151,7 @@ export default class Keyboard extends PureComponent {
 				</div>
 
 				<div className="keyboard-row">
-					{keys[0].map((button) =>
+					{keys[0].map(button =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
@@ -162,15 +161,15 @@ export default class Keyboard extends PureComponent {
 				</div>
 
 				<div className="keyboard-row">
-					<div className="keyboard-halfButton"></div>
-					{keys[1].map((button) =>
+					<div className="keyboard-halfButton" />
+					{keys[1].map(button =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
 							key={button}
 						/>
 					)}
-					<div className="keyboard-halfButton"></div>
+					<div className="keyboard-halfButton" />
 				</div>
 
 				<div className="keyboard-row">
@@ -178,7 +177,7 @@ export default class Keyboard extends PureComponent {
 						value={<ShiftIcon />}
 						onClick={this.handleShiftClick}
 					/>
-					{keys[2].map((button) =>
+					{keys[2].map(button =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
@@ -193,12 +192,12 @@ export default class Keyboard extends PureComponent {
 
 				<div className="keyboard-row">
 					{leftButtons}
-					{this.state.languages.length > 1 ?
+					{this.props.languages.length > 1 ?
 						<KeyboardButton
 							value={<LanguageIcon />}
 							onClick={this.handleLanguageClick}
 						/>
-					:null}
+					: null}
 					{inputNode.dataset.type === 'email' ?
 						<KeyboardButton
 							value={'@'}
