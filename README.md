@@ -47,7 +47,6 @@ const MyComponent = ({inputNode, goBack, submit}) =>
   <Keyboard
     inputNode={inputNode}
     languages = {[{
-      name:"phonetic",
       symbolsKeyValue: "Абв",
       layout:[
         ['я', 'в', 'е', 'р', 'т', 'ъ', 'у', 'и', 'о', 'п', 'ш', 'щ'],
