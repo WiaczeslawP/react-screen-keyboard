@@ -16,6 +16,7 @@ export default class Keyboard extends PureComponent {
 		onClick: PropTypes.func,
 		isFirstLetterUppercase: PropTypes.bool,
 		defaultLanguage: PropTypes.string,
+		languages: PropTypes.languages,
 	};
 
 	static defaultProps = {
