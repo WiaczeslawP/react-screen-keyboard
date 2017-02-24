@@ -5,5 +5,5 @@ var CyrillicLayout = require('./lib/layouts/CyrillicLayout');
 
 module.exports = Keyboard.default || Keyboard;
 module.exports.KeyboardButton = KeyboardButton.default || KeyboardButton;
-module.exports = LatinLayout.default || LatinLayout;
-module.exports = CyrillicLayout.default || CyrillicLayout;
+module.exports.LatinLayout =  LatinLayout;
+module.exports.CyrillicLayout =  CyrillicLayout;
