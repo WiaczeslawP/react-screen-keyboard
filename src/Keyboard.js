@@ -23,7 +23,7 @@ export default class Keyboard extends PureComponent {
 		leftButtons: [],
 		rightButtons: [],
 		isFirstLetterUppercase: false,
-		languages: [LatinLayout, CyrillicLayout],
+		languages: [CyrillicLayout, LatinLayout],
 	};
 
 	constructor(props) {
