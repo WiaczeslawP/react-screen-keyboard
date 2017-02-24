@@ -1,0 +1,34 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "settings": {
+    "import/resolver": "webpack"
+  },
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "consistent-return": 0,
+    "comma-dangle": 0,
+    "no-use-before-define": 0,
+    "no-tabs": 0,
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "indent": ['error', 'tab'],
+    "react/jsx-filename-extension": 0,
+    "react/jsx-indent-props": ['error', 'tab'],
+    "react/jsx-indent": ['error', 'tab'],
+    "react/jsx-no-bind": 0,
+    "react/prefer-stateless-function": 0,
+    "object-curly-spacing": ['error', 'never'],
+    "func-names": 'off',
+    "quote-props": 'off',
+    "space-before-function-paren": ['error', 'never'],
+  },
+  "plugins": [
+    "import",
+    "react"
+  ]
+}
