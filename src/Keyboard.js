@@ -139,11 +139,11 @@ export default class Keyboard extends PureComponent {
 		return (
 			<div className="keyboard">
 				<div className="keyboard-row">
-					{numbers.map(button =>
+					{numbers.map((button) =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
-							classes={'keyboard-numberButton'}
+							classes={"keyboard-numberButton"}
 							key={button}
 						/>
 					)}
@@ -154,7 +154,7 @@ export default class Keyboard extends PureComponent {
 				</div>
 
 				<div className="keyboard-row">
-					{keys[0].map(button =>
+					{keys[0].map((button) =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
@@ -164,15 +164,15 @@ export default class Keyboard extends PureComponent {
 				</div>
 
 				<div className="keyboard-row">
-					<div className="keyboard-halfButton" />
-					{keys[1].map(button =>
+					<div className="keyboard-halfButton"></div>
+					{keys[1].map((button) =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
 							key={button}
 						/>
 					)}
-					<div className="keyboard-halfButton" />
+					<div className="keyboard-halfButton"></div>
 				</div>
 
 				<div className="keyboard-row">
@@ -180,7 +180,7 @@ export default class Keyboard extends PureComponent {
 						value={<ShiftIcon />}
 						onClick={this.handleShiftClick}
 					/>
-					{keys[2].map(button =>
+					{keys[2].map((button) =>
 						<KeyboardButton
 							value={button}
 							onClick={this.handleLetterButtonClick}
