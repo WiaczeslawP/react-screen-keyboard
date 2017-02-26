@@ -1,7 +1,8 @@
 import React, {PureComponent, PropTypes} from 'react';
 import KeyboardButton from './KeyboardButton';
 
-import {LatinLayout, CyrillicLayout} from './layouts';
+import LatinLayout from './layouts/LatinLayout';
+import CyrillicLayout from './layouts/CyrillicLayout';
 import SymbolsLayout from './layouts/SymbolsLayout';
 
 import BackspaceIcon from './icons/BackspaceIcon';
@@ -15,48 +16,38 @@ export default class Keyboard extends PureComponent {
 		inputNode: PropTypes.any.isRequired,
 		onClick: PropTypes.func,
 		isFirstLetterUppercase: PropTypes.bool,
-		languages: PropTypes.array,
+		layouts: PropTypes.arrayOf(PropTypes.shape({
+			symbolsKeyValue: PropTypes.string,
+			layout: PropTypes.arrayOf(PropTypes.string),
+		})),
 	};
 
 	static defaultProps = {
 		leftButtons: [],
 		rightButtons: [],
 		isFirstLetterUppercase: false,
-		languages: [CyrillicLayout, LatinLayout],
+		layouts: [CyrillicLayout, LatinLayout],
 	};
 
-	constructor(props) {
-		super(props);
-		this.handleLetterButtonClick = this.handleLetterButtonClick.bind(this);
-		this.handleBackspaceClick = this.handleBackspaceClick.bind(this);
-		this.handleLanguageClick = this.handleLanguageClick.bind(this);
-		this.handleShiftClick = this.handleShiftClick.bind(this);
-		this.handleSymbolsClick = this.handleSymbolsClick.bind(this);
+	state = {
+		currentLayout: 0,
+		showSymbols: false,
+		uppercase: this.isUppercase(),
+	}
 
-		this.state = {
-			currentLanguage: 0,
+	handleLanguageClick = () =>
+		this.setState({
+			currentLayout: (this.state.currentLayout + 1) % this.props.layouts.length,
 			showSymbols: false,
-			uppercase: this.isUppercase(),
-		};
-	}
+		})
 
-	handleLanguageClick() {
-		this.setState(
-			{
-				currentLanguage: (this.state.currentLanguage + 1) % this.props.languages.length
-			}
-		);
-	}
+	handleShiftClick = () =>
+		this.setState({uppercase: !this.state.uppercase})
 
-	handleShiftClick() {
-		this.setState({uppercase: !this.state.uppercase});
-	}
+	handleSymbolsClick = () =>
+		this.setState({showSymbols: !this.state.showSymbols})
 
-	handleSymbolsClick() {
-		this.setState({showSymbols: !this.state.showSymbols});
-	}
-
-	handleLetterButtonClick(key) {
+	handleLetterButtonClick = (key) => {
 		const {inputNode} = this.props;
 		const {value, selectionStart, selectionEnd} = inputNode;
 		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
@@ -73,14 +64,7 @@ export default class Keyboard extends PureComponent {
 		inputNode.dispatchEvent(new Event('input'));
 	}
 
-	isUppercase() {
-		const {inputNode, isFirstLetterUppercase} = this.props;
-		return inputNode.type !== 'password' &&
-			inputNode.dataset.type !== 'email' &&
-			!inputNode.value.length && isFirstLetterUppercase;
-	}
-
-	handleBackspaceClick() {
+	handleBackspaceClick = () => {
 		const {inputNode} = this.props;
 		const {value, selectionStart, selectionEnd} = inputNode;
 		let nextValue;
@@ -106,12 +90,19 @@ export default class Keyboard extends PureComponent {
 		inputNode.dispatchEvent(new Event('input'));
 	}
 
+	isUppercase() {
+		const {inputNode, isFirstLetterUppercase} = this.props;
+		return inputNode.type !== 'password' &&
+			inputNode.dataset.type !== 'email' &&
+			!inputNode.value.length && isFirstLetterUppercase;
+	}
+
 	getKeys() {
 		let keysSet;
 		if (this.state.showSymbols) {
 			keysSet = SymbolsLayout.layout;
 		} else {
-			keysSet = this.props.languages[this.state.currentLanguage].layout;
+			keysSet = this.props.layouts[this.state.currentLayout].layout;
 		}
 
 		return this.state.uppercase ?
@@ -121,10 +112,9 @@ export default class Keyboard extends PureComponent {
 
 	getSymbolsKeyValue() {
 		if (this.state.showSymbols) {
-			return this.props.languages[this.state.currentLanguage].symbolsKeyValue;
-		} else {
-			return SymbolsLayout.symbolsKeyValue;
+			return this.props.layouts[this.state.currentLayout].symbolsKeyValue;
 		}
+		return SymbolsLayout.symbolsKeyValue;
 	}
 
 	render() {
@@ -192,7 +182,7 @@ export default class Keyboard extends PureComponent {
 
 				<div className="keyboard-row">
 					{leftButtons}
-					{this.props.languages.length > 1 ?
+					{this.props.layouts.length > 1 ?
 						<KeyboardButton
 							value={<LanguageIcon />}
 							onClick={this.handleLanguageClick}
