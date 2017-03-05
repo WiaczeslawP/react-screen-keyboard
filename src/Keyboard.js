@@ -18,10 +18,7 @@ export default class Keyboard extends PureComponent {
 		isFirstLetterUppercase: PropTypes.bool,
 		layouts: PropTypes.arrayOf(PropTypes.shape({
 			symbolsKeyValue: PropTypes.string,
-      layout: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
-        PropTypes.arrayOf(PropTypes.string),
-      ])
+      layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
 		})),
 	};
 
