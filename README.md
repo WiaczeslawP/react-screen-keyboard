@@ -40,7 +40,7 @@ const MyComponent = ({inputNode, goBack, submit}) =>
         classes="keyboard-submit-button"
       />
     ]}
-    layouts=[LatinLayout]
+    layouts={[LatinLayout]}
   />
 
 export default MyComponent;
