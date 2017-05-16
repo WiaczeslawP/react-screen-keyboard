@@ -87,7 +87,7 @@ export default class Keyboard extends PureComponent {
 			inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
 		}, 0);
 		this.setState({uppercase: this.isUppercase()});
-		inputNode.dispatchEvent(new Event('input'));
+		inputNode.dispatchEvent(new Event('input', {bubbles: true}));
 	}
 
 	isUppercase() {
