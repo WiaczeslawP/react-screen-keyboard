@@ -114,15 +114,7 @@ export default class Input extends Component {
     onFocus: null,
   };
 
-  componentDidMount() {
-    this.refs.input.addEventListener('input', this.handleChange);
-  }
-
-  componentWillUnmount() {
-    this.refs.input.removeEventListener('input', this.handleChange);
-  }
-
-  handleChange = (event) => this.props.onChange(event.target.value)
+  handleInput = (event) => this.props.onChange(event.target.value)
 
   handleFocus = () => {
     if (this.props.onFocus) {
@@ -136,6 +128,7 @@ export default class Input extends Component {
 
     return (
       <input
+        onInput={this.handleInput}
         value={value}
         onFocus={this.handleFocus}
         ref="input"
