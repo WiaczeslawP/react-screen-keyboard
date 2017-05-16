@@ -35,17 +35,26 @@ export default class Keyboard extends PureComponent {
 		uppercase: this.isUppercase(),
 	}
 
-	handleLanguageClick = () =>
+	handleLanguageClick = () => {
 		this.setState({
 			currentLayout: (this.state.currentLayout + 1) % this.props.layouts.length,
 			showSymbols: false,
-		})
+		});
 
-	handleShiftClick = () =>
-		this.setState({uppercase: !this.state.uppercase})
+		this.props.inputNode.focus();
+	}
 
-	handleSymbolsClick = () =>
-		this.setState({showSymbols: !this.state.showSymbols})
+	handleShiftClick = () => {
+		this.setState({uppercase: !this.state.uppercase});
+
+		this.props.inputNode.focus();
+	}
+
+	handleSymbolsClick = () => {
+		this.setState({showSymbols: !this.state.showSymbols});
+
+		this.props.inputNode.focus();
+	}
 
 	handleLetterButtonClick = (key) => {
 		const {inputNode} = this.props;
