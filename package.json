@@ -49,6 +49,7 @@
     "jsdom": "9.0.0",
     "mocha": "2.5.3",
     "postcss-cli": "2.5.2",
+    "prop-types": "^15.5.10",
     "react": "^15.3.0",
     "react-addons-test-utils": "^15.3.0",
     "react-dom": "^15.3.0",
