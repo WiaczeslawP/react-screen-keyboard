@@ -145,6 +145,7 @@ export default class Keyboard extends PureComponent {
 					)}
 					<KeyboardButton
 						value={<BackspaceIcon />}
+						classes={'keyboard-backspaceButton'}
 						onClick={this.handleBackspaceClick}
 					/>
 				</div>
@@ -174,6 +175,7 @@ export default class Keyboard extends PureComponent {
 				<div className="keyboard-row">
 					<KeyboardButton
 						value={<ShiftIcon />}
+						classes={'keyboard-shiftButton'}
 						onClick={this.handleShiftClick}
 					/>
 					{keys[2].map(button =>
@@ -185,6 +187,7 @@ export default class Keyboard extends PureComponent {
 					)}
 					<KeyboardButton
 						value={symbolsKeyValue}
+						classes={'keyboard-symbolButton'}
 						onClick={this.handleSymbolsClick}
 					/>
 				</div>
@@ -194,23 +197,26 @@ export default class Keyboard extends PureComponent {
 					{this.props.layouts.length > 1 ?
 						<KeyboardButton
 							value={<LanguageIcon />}
+							classes={'keyboard-languageButton'}
 							onClick={this.handleLanguageClick}
 						/>
 					: null}
 					{inputNode.dataset.type === 'email' ?
 						<KeyboardButton
 							value={'@'}
+							classes={'keyboard-atButton'}
 							onClick={this.handleLetterButtonClick}
 						/>
 					: null}
 					<KeyboardButton
 						value={' '}
-						classes="keyboard-space"
+						classes="keyboard-spaceButton"
 						onClick={this.handleLetterButtonClick}
 					/>
 					{inputNode.dataset.type === 'email' ?
 						<KeyboardButton
 							value={'.'}
+							classes={'keyboard-fullstopButton'}
 							onClick={this.handleLetterButtonClick}
 						/>
 					: null}
