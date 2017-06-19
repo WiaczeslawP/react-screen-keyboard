@@ -51,7 +51,8 @@
 	flex-basis: 56px;
 }
 
-.keyboard-space {
+.keyboard-space,
+.keyboard-spaceButton{
 	flex-grow: 1;
 }
 
