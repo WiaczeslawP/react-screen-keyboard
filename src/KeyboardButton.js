@@ -11,6 +11,7 @@ export default class KeyboardButton extends PureComponent {
 	};
 
 	static defaultProps = {
+		classes: '',
 		autofocus: false,
 		isDisabled: false,
 	};
@@ -18,9 +19,6 @@ export default class KeyboardButton extends PureComponent {
 	handleClick = () => this.props.onClick(this.props.value)
 
 	render() {
-	
-		let classes = this.props.classes || '';
-		
 		return (
 			<button
 				type="button"
