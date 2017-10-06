@@ -1,331 +1,252 @@
-'use strict';
+import React, {PureComponent} from 'react';
+import PropTypes from 'prop-types';
+import KeyboardButton from './KeyboardButton';
 
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
+import LatinLayout from './layouts/LatinLayout';
+import CyrillicLayout from './layouts/CyrillicLayout';
+import SymbolsLayout from './layouts/SymbolsLayout';
+import NumericLayout from './layouts/NumericLayout';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+import BackspaceIcon from './icons/BackspaceIcon';
+import LanguageIcon from './icons/LanguageIcon';
+import ShiftIcon from './icons/ShiftIcon';
 
-var _react = require('react');
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
-var _react2 = _interopRequireDefault(_react);
+export default class Keyboard extends PureComponent {
+	static propTypes = {
+		leftButtons: PropTypes.arrayOf(PropTypes.node),
+		rightButtons: PropTypes.arrayOf(PropTypes.node),
+		inputNode: PropTypes.any.isRequired,
+		onClick: PropTypes.func,
+		isFirstLetterUppercase: PropTypes.bool,
+		isNumeric: PropTypes.bool,
+		layouts: PropTypes.arrayOf(PropTypes.shape({
+			symbolsKeyValue: PropTypes.string,
+			layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
+		})),
+	};
 
-var _propTypes = require('prop-types');
+	static defaultProps = {
+		leftButtons: [],
+		rightButtons: [],
+		isFirstLetterUppercase: false,
+		isNumeric: false,
+		layouts: [CyrillicLayout, LatinLayout],
+	};
 
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _KeyboardButton = require('./KeyboardButton');
-
-var _KeyboardButton2 = _interopRequireDefault(_KeyboardButton);
-
-var _LatinLayout = require('./layouts/LatinLayout');
-
-var _LatinLayout2 = _interopRequireDefault(_LatinLayout);
-
-var _CyrillicLayout = require('./layouts/CyrillicLayout');
-
-var _CyrillicLayout2 = _interopRequireDefault(_CyrillicLayout);
-
-var _SymbolsLayout = require('./layouts/SymbolsLayout');
-
-var _SymbolsLayout2 = _interopRequireDefault(_SymbolsLayout);
-
-var _NumericLayout = require('./layouts/NumericLayout');
-
-var _NumericLayout2 = _interopRequireDefault(_NumericLayout);
-
-var _BackspaceIcon = require('./icons/BackspaceIcon');
-
-var _BackspaceIcon2 = _interopRequireDefault(_BackspaceIcon);
-
-var _LanguageIcon = require('./icons/LanguageIcon');
-
-var _LanguageIcon2 = _interopRequireDefault(_LanguageIcon);
-
-var _ShiftIcon = require('./icons/ShiftIcon');
-
-var _ShiftIcon2 = _interopRequireDefault(_ShiftIcon);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-
-var Keyboard = function (_PureComponent) {
-	_inherits(Keyboard, _PureComponent);
-
-	function Keyboard() {
-		var _ref;
-
-		var _temp, _this, _ret;
-
-		_classCallCheck(this, Keyboard);
-
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-
-		return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Keyboard.__proto__ || Object.getPrototypeOf(Keyboard)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-			currentLayout: 0,
-			showSymbols: false,
-			uppercase: _this.isUppercase()
-		}, _this.handleLanguageClick = function () {
-			_this.setState({
-				currentLayout: (_this.state.currentLayout + 1) % _this.props.layouts.length,
-				showSymbols: false
-			});
-
-			_this.props.inputNode.focus();
-		}, _this.handleShiftClick = function () {
-			_this.setState({ uppercase: !_this.state.uppercase });
-
-			_this.props.inputNode.focus();
-		}, _this.handleSymbolsClick = function () {
-			_this.setState({ showSymbols: !_this.state.showSymbols });
-
-			_this.props.inputNode.focus();
-		}, _this.handleLetterButtonClick = function (key) {
-			var inputNode = _this.props.inputNode;
-			var value = inputNode.value,
-			    selectionStart = inputNode.selectionStart,
-			    selectionEnd = inputNode.selectionEnd;
-
-			var nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
-
-			inputNode.value = nextValue;
-			if (_this.props.onClick) {
-				_this.props.onClick(nextValue);
-			}
-			setTimeout(function () {
-				inputNode.focus();
-				inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
-			}, 0);
-			_this.setState({ uppercase: _this.isUppercase() });
-			inputNode.dispatchEvent(new Event('input', { bubbles: true }));
-		}, _this.handleBackspaceClick = function () {
-			var inputNode = _this.props.inputNode;
-			var value = inputNode.value,
-			    selectionStart = inputNode.selectionStart,
-			    selectionEnd = inputNode.selectionEnd;
-
-			var nextValue = void 0;
-			var nextSelectionPosition = void 0;
-			if (selectionStart === selectionEnd) {
-				nextValue = value.substring(0, selectionStart - 1) + value.substring(selectionEnd);
-				nextSelectionPosition = selectionStart - 1;
-			} else {
-				nextValue = value.substring(0, selectionStart) + value.substring(selectionEnd);
-				nextSelectionPosition = selectionStart;
-			}
-			nextSelectionPosition = nextSelectionPosition > 0 ? nextSelectionPosition : 0;
-
-			inputNode.value = nextValue;
-			if (_this.props.onClick) {
-				_this.props.onClick(nextValue);
-			}
-			setTimeout(function () {
-				inputNode.focus();
-				inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
-			}, 0);
-			_this.setState({ uppercase: _this.isUppercase() });
-			inputNode.dispatchEvent(new Event('input', { bubbles: true }));
-		}, _temp), _possibleConstructorReturn(_this, _ret);
+	state = {
+		currentLayout: 0,
+		showSymbols: false,
+		uppercase: this.isUppercase(),
 	}
 
-	_createClass(Keyboard, [{
-		key: 'isUppercase',
-		value: function isUppercase() {
-			var _props = this.props,
-			    inputNode = _props.inputNode,
-			    isFirstLetterUppercase = _props.isFirstLetterUppercase;
+	handleLanguageClick = () => {
+		this.setState({
+			currentLayout: (this.state.currentLayout + 1) % this.props.layouts.length,
+			showSymbols: false,
+		});
 
-			return inputNode.type !== 'password' && inputNode.dataset.type !== 'email' && !inputNode.value.length && isFirstLetterUppercase;
+		this.props.inputNode.focus();
+	}
+
+	handleShiftClick = () => {
+		this.setState({uppercase: !this.state.uppercase});
+
+		this.props.inputNode.focus();
+	}
+
+	handleSymbolsClick = () => {
+		this.setState({showSymbols: !this.state.showSymbols});
+
+		this.props.inputNode.focus();
+	}
+
+	handleLetterButtonClick = (key) => {
+		const {inputNode} = this.props;
+		const {value, selectionStart, selectionEnd} = inputNode;
+		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
+
+		inputNode.value = nextValue;
+		if (this.props.onClick) {
+			this.props.onClick(nextValue);
 		}
-	}, {
-		key: 'getKeys',
-		value: function getKeys() {
-			var keysSet = void 0;
-			if (this.state.showSymbols) {
-				keysSet = _SymbolsLayout2.default.layout;
-			} else {
-				keysSet = this.props.layouts[this.state.currentLayout].layout;
-			}
+		setTimeout(() => {
+			inputNode.focus();
+			inputNode.setSelectionRange(selectionStart + 1, selectionStart + 1);
+		}, 0);
+		this.setState({uppercase: this.isUppercase()});
+		inputNode.dispatchEvent(new Event('input', {bubbles: true}));
+	}
 
-			return this.state.uppercase ? keysSet.map(function (keyRow) {
-				return keyRow.map(function (key) {
-					return key.toUpperCase();
-				});
-			}) : keysSet;
+	handleBackspaceClick = () => {
+		const {inputNode} = this.props;
+		const {value, selectionStart, selectionEnd} = inputNode;
+		let nextValue;
+		let nextSelectionPosition;
+		if (selectionStart === selectionEnd) {
+			nextValue = value.substring(0, selectionStart - 1) + value.substring(selectionEnd);
+			nextSelectionPosition = selectionStart - 1;
+		} else {
+			nextValue = value.substring(0, selectionStart) + value.substring(selectionEnd);
+			nextSelectionPosition = selectionStart;
 		}
-	}, {
-		key: 'getSymbolsKeyValue',
-		value: function getSymbolsKeyValue() {
-			if (this.state.showSymbols) {
-				return this.props.layouts[this.state.currentLayout].symbolsKeyValue;
-			}
-			return _SymbolsLayout2.default.symbolsKeyValue;
+		nextSelectionPosition = (nextSelectionPosition > 0) ? nextSelectionPosition : 0;
+
+		inputNode.value = nextValue;
+		if (this.props.onClick) {
+			this.props.onClick(nextValue);
 		}
-	}, {
-		key: 'renderKeyRows',
-		value: function renderKeyRows() {
-			var _this2 = this;
+		setTimeout(() => {
+			inputNode.focus();
+			inputNode.setSelectionRange(nextSelectionPosition, nextSelectionPosition);
+		}, 0);
+		this.setState({uppercase: this.isUppercase()});
+		inputNode.dispatchEvent(new Event('input', {bubbles: true}));
+	}
 
-			var keys = this.getKeys();
-			return keys.map(function (row, i) {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'keyboard-row', key: 'row-' + i },
-					i === keys.length - 1 && _react2.default.createElement(_KeyboardButton2.default, {
-						value: _react2.default.createElement(_ShiftIcon2.default, null),
-						classes: 'keyboard-shiftButton',
-						onClick: _this2.handleShiftClick
-					}),
-					row.map(function (button) {
-						return _react2.default.createElement(_KeyboardButton2.default, {
-							value: button,
-							onClick: _this2.handleLetterButtonClick,
-							key: button
-						});
-					}),
-					i === keys.length - 1 && _react2.default.createElement(_KeyboardButton2.default, {
-						value: _this2.getSymbolsKeyValue(),
-						classes: 'keyboard-symbolButton',
-						onClick: _this2.handleSymbolsClick
-					})
-				);
-			});
+	isUppercase() {
+		const {inputNode, isFirstLetterUppercase} = this.props;
+		return inputNode.type !== 'password' &&
+			inputNode.dataset.type !== 'email' &&
+			!inputNode.value.length && isFirstLetterUppercase;
+	}
+
+	getKeys() {
+		let keysSet;
+		if (this.state.showSymbols) {
+			keysSet = SymbolsLayout.layout;
+		} else {
+			keysSet = this.props.layouts[this.state.currentLayout].layout;
 		}
-	}, {
-		key: 'renderNumeric',
-		value: function renderNumeric() {
-			var _this3 = this;
 
-			var keys = _NumericLayout2.default.layout;
-			var _props2 = this.props,
-			    leftButtons = _props2.leftButtons,
-			    rightButtons = _props2.rightButtons;
+		return this.state.uppercase ?
+			keysSet.map(keyRow => keyRow.map(key => key.toUpperCase()))
+			: keysSet;
+	}
 
-			return _react2.default.createElement(
-				'div',
-				{ className: 'keyboard numeric-keyboard' },
-				keys.map(function (row, i) {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'keyboard-row', key: 'row-' + i },
-						row.map(function (button) {
-							return _react2.default.createElement(_KeyboardButton2.default, {
-								value: button,
-								onClick: _this3.handleLetterButtonClick,
-								key: button
-							});
-						}),
-						i === keys.length - 1 && _react2.default.createElement(_KeyboardButton2.default, {
-							value: _react2.default.createElement(_BackspaceIcon2.default, null),
-							classes: 'keyboard-backspaceButton',
-							onClick: _this3.handleBackspaceClick
-						})
-					);
-				}),
-				_react2.default.createElement(
-					'div',
-					{ className: 'keyboard-row' },
-					leftButtons,
-					rightButtons
-				)
-			);
+	getSymbolsKeyValue() {
+		if (this.state.showSymbols) {
+			return this.props.layouts[this.state.currentLayout].symbolsKeyValue;
 		}
-	}, {
-		key: 'renderAlphanumeric',
-		value: function renderAlphanumeric() {
-			var _this4 = this;
+		return SymbolsLayout.symbolsKeyValue;
+	}
 
-			var _props3 = this.props,
-			    leftButtons = _props3.leftButtons,
-			    rightButtons = _props3.rightButtons,
-			    inputNode = _props3.inputNode;
+	renderKeyRows() {
+		const keys = this.getKeys();
+		return keys.map((row, i) => 
+			<div className="keyboard-row" key={`row-${i}`}>
+				{i === keys.length - 1 &&
+					<KeyboardButton
+						value={<ShiftIcon />}
+						classes="keyboard-shiftButton"
+						onClick={this.handleShiftClick}
+					/>
+				}
+				{row.map(button =>
+					<KeyboardButton
+						value={button}
+						onClick={this.handleLetterButtonClick}
+						key={button}
+					/>
+				)}
+				{i === keys.length - 1 &&
+					<KeyboardButton
+						value={this.getSymbolsKeyValue()}
+						classes="keyboard-symbolButton"
+						onClick={this.handleSymbolsClick}
+					/>
+				}
+			</div>
+		);
+	}
 
-			return _react2.default.createElement(
-				'div',
-				{ className: 'keyboard' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'keyboard-row' },
-					numbers.map(function (button) {
-						return _react2.default.createElement(_KeyboardButton2.default, {
-							value: button,
-							onClick: _this4.handleLetterButtonClick,
-							classes: 'keyboard-numberButton',
-							key: button
-						});
-					}),
-					_react2.default.createElement(_KeyboardButton2.default, {
-						value: _react2.default.createElement(_BackspaceIcon2.default, null),
-						classes: 'keyboard-backspaceButton',
-						onClick: this.handleBackspaceClick
-					})
-				),
-				this.renderKeyRows(),
-				_react2.default.createElement(
-					'div',
-					{ className: 'keyboard-row' },
-					leftButtons,
-					this.props.layouts.length > 1 ? _react2.default.createElement(_KeyboardButton2.default, {
-						value: _react2.default.createElement(_LanguageIcon2.default, null),
-						classes: 'keyboard-languageButton',
-						onClick: this.handleLanguageClick
-					}) : null,
-					inputNode.dataset.type === 'email' ? _react2.default.createElement(_KeyboardButton2.default, {
-						value: '@',
-						classes: 'keyboard-atButton',
-						onClick: this.handleLetterButtonClick
-					}) : null,
-					_react2.default.createElement(_KeyboardButton2.default, {
-						value: ' ',
-						classes: 'keyboard-spaceButton',
-						onClick: this.handleLetterButtonClick
-					}),
-					inputNode.dataset.type === 'email' ? _react2.default.createElement(_KeyboardButton2.default, {
-						value: '.',
-						classes: 'keyboard-fullstopButton',
-						onClick: this.handleLetterButtonClick
-					}) : null,
-					rightButtons
-				)
-			);
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			return this.props.isNumeric ? this.renderNumeric() : this.renderAlphanumeric();
-		}
-	}]);
+	renderNumeric() {
+		const keys = NumericLayout.layout;
+		const {leftButtons, rightButtons} = this.props;
+		return (
+			<div className="keyboard numeric-keyboard">
+				{keys.map((row, i) => 
+					<div className="keyboard-row" key={`row-${i}`}>
+						{row.map(button =>
+							<KeyboardButton
+								value={button}
+								onClick={this.handleLetterButtonClick}
+								key={button}
+							/>
+						)}
+						{i === keys.length - 1 &&
+							<KeyboardButton
+								value={<BackspaceIcon />}
+								classes="keyboard-backspaceButton"
+								onClick={this.handleBackspaceClick}
+							/>
+						}
+					</div>
+				)}
+				<div className="keyboard-row">
+					{leftButtons}
+					{rightButtons}
+				</div>
+			</div>
+		);
+	}
 
-	return Keyboard;
-}(_react.PureComponent);
+	renderAlphanumeric() {
+		const {leftButtons, rightButtons, inputNode} = this.props;
+		return (
+			<div className="keyboard">
+				<div className="keyboard-row">
+					{numbers.map(button =>
+						<KeyboardButton
+							value={button}
+							onClick={this.handleLetterButtonClick}
+							classes="keyboard-numberButton"
+							key={button}
+						/>
+					)}
+					<KeyboardButton
+						value={<BackspaceIcon />}
+						classes="keyboard-backspaceButton"
+						onClick={this.handleBackspaceClick}
+					/>
+				</div>
+				{this.renderKeyRows()}
+				<div className="keyboard-row">
+					{leftButtons}
+					{this.props.layouts.length > 1 ?
+						<KeyboardButton
+							value={<LanguageIcon />}
+							classes="keyboard-languageButton"
+							onClick={this.handleLanguageClick}
+						/>
+					: null}
+					{inputNode.dataset.type === 'email' ?
+						<KeyboardButton
+							value={'@'}
+							classes="keyboard-atButton"
+							onClick={this.handleLetterButtonClick}
+						/>
+					: null}
+					<KeyboardButton
+						value={' '}
+						classes="keyboard-spaceButton"
+						onClick={this.handleLetterButtonClick}
+					/>
+					{inputNode.dataset.type === 'email' ?
+						<KeyboardButton
+							value={'.'}
+							classes="keyboard-fullstopButton"
+							onClick={this.handleLetterButtonClick}
+						/>
+					: null}
+					{rightButtons}
+				</div>
+			</div>
+		);
+	}
 
-Keyboard.propTypes = {
-	leftButtons: _propTypes2.default.arrayOf(_propTypes2.default.node),
-	rightButtons: _propTypes2.default.arrayOf(_propTypes2.default.node),
-	inputNode: _propTypes2.default.any.isRequired,
-	onClick: _propTypes2.default.func,
-	isFirstLetterUppercase: _propTypes2.default.bool,
-	isNumeric: _propTypes2.default.bool,
-	layouts: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-		symbolsKeyValue: _propTypes2.default.string,
-		layout: _propTypes2.default.arrayOf(_propTypes2.default.arrayOf(_propTypes2.default.string))
-	}))
-};
-Keyboard.defaultProps = {
-	leftButtons: [],
-	rightButtons: [],
-	isFirstLetterUppercase: false,
-	isNumeric: false,
-	layouts: [_CyrillicLayout2.default, _LatinLayout2.default]
-};
-exports.default = Keyboard;
-//# sourceMappingURL=Keyboard.js.map
+	render() {
+		return this.props.isNumeric ? this.renderNumeric() : this.renderAlphanumeric();
+	}
+}
