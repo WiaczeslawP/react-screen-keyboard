@@ -247,6 +247,9 @@ export default class Keyboard extends PureComponent {
 	}
 
 	render() {
+		if (!this.props.inputNode) {
+			return null;
+		}
 		return this.props.isNumeric ? this.renderNumeric() : this.renderAlphanumeric();
 	}
 }
