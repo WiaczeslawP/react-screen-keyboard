@@ -1,9 +1,10 @@
 .keyboard {
 	width: 100%;
-	max-width: 1030px;
+	max-width: 57em;
 	margin: 0 auto;
 	background: #dadada;
-	box-shadow: 0px 2px 12px 0px rgba(0,0,0,0.5);
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .5);
+	font-size: 18px;
 }
 
 .keyboard-row {
@@ -19,13 +20,13 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	flex-basis: 100px;
-	font-size: 18px;
-	height: 60px;
+	flex-basis: 5.5em;
+	height: 3.3333333333em;
 	margin: 5px;
 	border-radius: 4px;
-	background-color: #F5F5F5;
-	border: 1px solid #CECECE;
+	background-color: #f5f5f5;
+	border: 1px solid #cecece;
+	font-size: 1em;
 	font-family: 'Roboto';
 	font-weight: 300;
 }
@@ -35,12 +36,12 @@
 }
 
 .keyboard-button:disabled {
-	opacity: 0.4;
+	opacity: .4;
 	cursor: default;
 }
 
 .keyboard-button:active {
-	background-color: #cccccc;
+	background-color: #ccc;
 }
 
 .keyboard-numberButton {
@@ -48,7 +49,7 @@
 }
 
 .keyboard-halfButton {
-	flex-basis: 56px;
+	flex-basis: 2.75em;
 }
 
 .keyboard-space,
@@ -58,16 +59,30 @@
 
 .keyboard-utilButton {
 	flex-grow: 2;
-	max-width: 55px;
+	max-width: 3em;
 }
 
 .keyboard-additionalButton {
-	flex-basis: 128px;
+	flex-basis: 7em;
 }
 
 .keyboard-submit-button {
-	flex-basis: 144px;
+	flex-basis: 8em;
 	background-color: #63b324;
 	border-color: #63b324;
-	color: #ffffff;
+	color: #fff;
+}
+
+.numeric-keyboard {
+	width: auto;
+}
+
+.numeric-keyboard .keyboard-button {
+	width: 4em;
+	flex-basis: auto;
+}
+
+.numeric-keyboard .keyboard-submit-button {
+	flex: 1;
+	width: auto;
 }

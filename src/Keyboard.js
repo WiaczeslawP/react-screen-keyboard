@@ -5,10 +5,13 @@ import KeyboardButton from './KeyboardButton';
 import LatinLayout from './layouts/LatinLayout';
 import CyrillicLayout from './layouts/CyrillicLayout';
 import SymbolsLayout from './layouts/SymbolsLayout';
+import NumericLayout from './layouts/NumericLayout';
 
 import BackspaceIcon from './icons/BackspaceIcon';
 import LanguageIcon from './icons/LanguageIcon';
 import ShiftIcon from './icons/ShiftIcon';
+
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 export default class Keyboard extends PureComponent {
 	static propTypes = {
@@ -17,6 +20,7 @@ export default class Keyboard extends PureComponent {
 		inputNode: PropTypes.any.isRequired,
 		onClick: PropTypes.func,
 		isFirstLetterUppercase: PropTypes.bool,
+		isNumeric: PropTypes.bool,
 		layouts: PropTypes.arrayOf(PropTypes.shape({
 			symbolsKeyValue: PropTypes.string,
 			layout: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
@@ -27,6 +31,7 @@ export default class Keyboard extends PureComponent {
 		leftButtons: [],
 		rightButtons: [],
 		isFirstLetterUppercase: false,
+		isNumeric: false,
 		layouts: [CyrillicLayout, LatinLayout],
 	};
 
@@ -127,12 +132,68 @@ export default class Keyboard extends PureComponent {
 		return SymbolsLayout.symbolsKeyValue;
 	}
 
-	render() {
-		const {leftButtons, rightButtons, inputNode} = this.props;
+	renderKeyRows() {
 		const keys = this.getKeys();
-		const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-		const symbolsKeyValue = this.getSymbolsKeyValue();
+		return keys.map((row, i) => 
+			<div className="keyboard-row" key={`row-${i}`}>
+				{i === keys.length - 1 &&
+					<KeyboardButton
+						value={<ShiftIcon />}
+						classes="keyboard-shiftButton"
+						onClick={this.handleShiftClick}
+					/>
+				}
+				{row.map(button =>
+					<KeyboardButton
+						value={button}
+						onClick={this.handleLetterButtonClick}
+						key={button}
+					/>
+				)}
+				{i === keys.length - 1 &&
+					<KeyboardButton
+						value={this.getSymbolsKeyValue()}
+						classes="keyboard-symbolButton"
+						onClick={this.handleSymbolsClick}
+					/>
+				}
+			</div>
+		);
+	}
 
+	renderNumeric() {
+		const keys = NumericLayout.layout;
+		const {leftButtons, rightButtons} = this.props;
+		return (
+			<div className="keyboard numeric-keyboard">
+				{keys.map((row, i) => 
+					<div className="keyboard-row" key={`row-${i}`}>
+						{row.map(button =>
+							<KeyboardButton
+								value={button}
+								onClick={this.handleLetterButtonClick}
+								key={button}
+							/>
+						)}
+						{i === keys.length - 1 &&
+							<KeyboardButton
+								value={<BackspaceIcon />}
+								classes="keyboard-backspaceButton"
+								onClick={this.handleBackspaceClick}
+							/>
+						}
+					</div>
+				)}
+				<div className="keyboard-row">
+					{leftButtons}
+					{rightButtons}
+				</div>
+			</div>
+		);
+	}
+
+	renderAlphanumeric() {
+		const {leftButtons, rightButtons, inputNode} = this.props;
 		return (
 			<div className="keyboard">
 				<div className="keyboard-row">
@@ -150,49 +211,7 @@ export default class Keyboard extends PureComponent {
 						onClick={this.handleBackspaceClick}
 					/>
 				</div>
-
-				<div className="keyboard-row">
-					{keys[0].map(button =>
-						<KeyboardButton
-							value={button}
-							onClick={this.handleLetterButtonClick}
-							key={button}
-						/>
-					)}
-				</div>
-
-				<div className="keyboard-row">
-					<div className="keyboard-halfButton" />
-					{keys[1].map(button =>
-						<KeyboardButton
-							value={button}
-							onClick={this.handleLetterButtonClick}
-							key={button}
-						/>
-					)}
-					<div className="keyboard-halfButton" />
-				</div>
-
-				<div className="keyboard-row">
-					<KeyboardButton
-						value={<ShiftIcon />}
-						classes="keyboard-shiftButton"
-						onClick={this.handleShiftClick}
-					/>
-					{keys[2].map(button =>
-						<KeyboardButton
-							value={button}
-							onClick={this.handleLetterButtonClick}
-							key={button}
-						/>
-					)}
-					<KeyboardButton
-						value={symbolsKeyValue}
-						classes="keyboard-symbolButton"
-						onClick={this.handleSymbolsClick}
-					/>
-				</div>
-
+				{this.renderKeyRows()}
 				<div className="keyboard-row">
 					{leftButtons}
 					{this.props.layouts.length > 1 ?
@@ -225,5 +244,9 @@ export default class Keyboard extends PureComponent {
 				</div>
 			</div>
 		);
+	}
+
+	render() {
+		return this.props.isNumeric ? this.renderNumeric() : this.renderAlphanumeric();
 	}
 }
