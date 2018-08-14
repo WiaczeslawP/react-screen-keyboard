@@ -15,6 +15,7 @@ const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 export default class Keyboard extends PureComponent {
 	static propTypes = {
+		style: PropTypes.any,
 		leftButtons: PropTypes.arrayOf(PropTypes.node),
 		rightButtons: PropTypes.arrayOf(PropTypes.node),
 		inputNode: PropTypes.any.isRequired,
@@ -195,7 +196,7 @@ export default class Keyboard extends PureComponent {
 	renderAlphanumeric() {
 		const {leftButtons, rightButtons, inputNode} = this.props;
 		return (
-			<div className="keyboard">
+			<div className="keyboard" style={this.props.style}>
 				<div className="keyboard-row">
 					{numbers.map(button =>
 						<KeyboardButton
